@@ -1,0 +1,499 @@
+{
+  "name": "Solar Teacher Hands-on",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "solar-teacher/analyze",
+        "responseMode": "lastNode",
+        "responseData": "firstEntryJson",
+        "options": {
+          "allowedOrigins": "*",
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "content-type"
+              }
+            ]
+          }
+        }
+      },
+      "id": "9e424f55-57e3-4d4d-8de6-53e2e593d4a9",
+      "name": "Analyze Note Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -900,
+        0
+      ],
+      "webhookId": "solar-teacher-analyze"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const input = $input.first().json;\nconst rawText = String(input.raw_text || '').trim();\nconst referenceText = String(input.reference_text || '').trim();\nconst referenceBlock = referenceText || '참고자료 없음';\n\nif (input.error) return [{ json: input }];\nif (!rawText) return [{ json: { error: '분석할 텍스트가 없습니다.' } }];\n\nconst feedbackPrompt = '너는 입력을 보고 틀린 부분에 대해서 피드백을 주는 선생님이야. 피드백이 필요한 경우 피드백을 하고, 필요 없으면 칭찬을 해줘.\\n'\n  + '1. 참고자료가 있으면 참고자료를 우선 기준으로 삼아줘. 참고자료에 없는 내용은 일반 지식으로 조심스럽게 판단해줘.\\n'\n  + '2. 개념적, 논리적으로 잘못된 문장에 대해서만 피드백을 해줘.\\n'\n  + '3. 피드백 숫자는 1부터 차례대로 넣어줘.\\n'\n  + '4. 피드백이 없으면 칭찬 한문장 작성해줘.\\n'\n  + '5. 출력은 아래 XML 형식 중 하나만 사용해.\\n\\n'\n  + '<feedback-case type=\"success\">\\n<correct>{{칭찬 한문장}}</correct>\\n</feedback-case>\\n\\n'\n  + '<feedback-case type=\"error\">\\n<item>\\n<number>{{피드백 숫자}}</number>\\n<wrong>{{잘못된 부분}}</wrong>\\n<correct>{{수정 사항}}</correct>\\n<explanation>{{설명}}</explanation>\\n<reference>{{참고한 자료 문장 또는 참고자료 없음}}</reference>\\n</item>\\n</feedback-case>\\n\\n'\n  + '<정보>\\n' + referenceBlock + '\\n</정보>\\n\\n<입력>\\n' + rawText + '\\n</입력>';\n\nconst quizPrompt = '아래 입력과 참고자료를 기반으로 O/X 퀴즈 5개를 만들어줘. 참고자료가 있으면 참고자료의 표현과 기준을 우선 반영해. 응답은 반드시 JSON 배열만 반환해.\\n'\n  + '형식: [{\"question\":\"질문 내용\", \"answer\":\"O 또는 X\", \"explanation\":\"정답 설명\"}]\\n\\n'\n  + '#참고자료:\\n' + referenceBlock + '\\n\\n'\n  + '#입력:\\n' + rawText;\n\nreturn [{\n  json: {\n    raw_text: rawText,\n    reference_text: referenceText,\n    reference_used: referenceText.length > 0,\n    feedbackPrompt,\n    quizPrompt,\n  },\n}];"
+      },
+      "id": "9e2890f4-20ea-491b-89ff-94d2159062d4",
+      "name": "Prepare Prompts",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.upstage.ai/v1/solar/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{$env.UPSTAGE_API_KEY}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { model: $env.UPSTAGE_CHAT_MODEL || 'solar-pro', temperature: 0.2, messages: [{ role: 'user', content: $json.feedbackPrompt }] } }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "4cab6fee-4c61-4aa2-b53e-513f0c52cbbb",
+      "name": "Upstage Feedback",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1040,
+        -20
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.upstage.ai/v1/solar/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{$env.UPSTAGE_API_KEY}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { model: $env.UPSTAGE_CHAT_MODEL || 'solar-pro', temperature: 0.2, messages: [{ role: 'user', content: $('Prepare Prompts').first().json.quizPrompt }] } }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "36d3466b-97b6-4ac2-9f85-b5f0bf489c02",
+      "name": "Upstage Quiz",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1260,
+        -20
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const prepared = $('Prepare Prompts').first().json;\nif (prepared.error) return [{ json: { error: prepared.error } }];\n\nconst feedbackResponse = $('Upstage Feedback').first().json;\nconst quizResponse = $('Upstage Quiz').first().json;\n\nfunction getContent(response) {\n  return response?.choices?.[0]?.message?.content || '';\n}\n\nfunction stripJsonFence(value) {\n  let text = String(value || '').trim();\n  const fence = String.fromCharCode(96, 96, 96);\n  if (text.startsWith(fence + 'json')) text = text.slice(7).trim();\n  else if (text.startsWith(fence)) text = text.slice(3).trim();\n  if (text.endsWith(fence)) text = text.slice(0, -3).trim();\n  return text;\n}\n\nfunction parseQuizzes(value) {\n  try {\n    const parsed = JSON.parse(stripJsonFence(value));\n    if (Array.isArray(parsed)) return parsed;\n    if (Array.isArray(parsed.quiz)) return parsed.quiz;\n  } catch (error) {}\n  return [];\n}\n\nreturn [{\n  json: {\n    raw_text: prepared.raw_text,\n    reference_used: Boolean(prepared.reference_used),\n    feedback: getContent(feedbackResponse),\n    quizzes: parseQuizzes(getContent(quizResponse)),\n    mode: 'n8n-json-base64-to-ocr',\n  },\n}];"
+      },
+      "id": "1af3f06d-6f6f-43d6-9d52-b1975c0793b7",
+      "name": "Build Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1480,
+        -20
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "d5505fa5-6bfd-473f-a49f-3316593e1ba5",
+              "leftValue": "={{ $json.error }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "a7c36e70-7536-465f-81f6-a2940dd4b6c6",
+      "name": "Has Input Error?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        780,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return [{ json: { error: '텍스트를 입력하거나 이미지/PDF 파일을 첨부해주세요.' } }];"
+      },
+      "id": "c62aa18b-7560-498c-ac66-78b52b3a806e",
+      "name": "Return Input Error",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        80,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const item = $input.first();\nconst body = item.json.body || item.json;\nconst incomingBinary = item.binary || {};\nconst binaryKeys = Object.keys(incomingBinary);\nconst rawText = String(body.content || '').trim();\nconst referenceText = String(body.reference_text || body.referenceText || '').trim();\nconst fileBase64 = String(body.file_base64 || body.fileBase64 || '').trim();\nconst fileName = body.file_name || body.fileName || 'note-upload';\nconst mimeType = body.mime_type || body.mimeType || 'application/octet-stream';\nlet normalizedBinary = {};\nlet fileSource = '';\n\nif (fileBase64) {\n  const base64Data = fileBase64.includes(',') ? fileBase64.split(',').pop() : fileBase64;\n  normalizedBinary.document = {\n    data: base64Data,\n    fileName,\n    mimeType,\n  };\n  fileSource = 'json_base64';\n} else if (incomingBinary.document || incomingBinary.data || binaryKeys.length) {\n  const fileBinaryProperty = incomingBinary.document ? 'document' : incomingBinary.data ? 'data' : binaryKeys[0];\n  normalizedBinary.document = incomingBinary[fileBinaryProperty];\n  fileSource = 'webhook_binary:' + fileBinaryProperty;\n}\n\nreturn [{\n  json: {\n    raw_text: rawText,\n    reference_text: referenceText,\n    hasText: rawText.length > 0,\n    hasDocument: Boolean(normalizedBinary.document),\n    fileSource,\n  },\n  binary: normalizedBinary,\n}];"
+      },
+      "id": "74c24018-9332-44db-93cd-7d39dd4c3609",
+      "name": "Normalize Input",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -680,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "9c27e39d-b1a4-4c8d-aa9c-13fcf5da382e",
+              "leftValue": "={{ $json.hasText }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "6b5dfd2c-0285-4e18-b364-050875df04d6",
+      "name": "Has Text?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -460,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const input = $input.first().json;\nreturn [{\n  json: {\n    raw_text: input.raw_text,\n    reference_text: input.reference_text,\n  },\n}];"
+      },
+      "id": "52c0a459-3e43-4e9d-b54c-a998a0121e53",
+      "name": "Use Text Input",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -180,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "fa56e445-2753-471b-9c86-b2e652240f4f",
+              "leftValue": "={{ $json.hasDocument }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "1dbd797b-0c65-4b85-9281-11f286195071",
+      "name": "Has Document?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -180,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.upstage.ai/v1/document-ai/ocr",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{$env.UPSTAGE_API_KEY}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "document",
+              "parameterType": "formBinaryData",
+              "inputDataFieldName": "document"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "f7fa1863-c738-4e56-b765-44ab1f30a9ea",
+      "name": "Upstage OCR",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        80,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const normalized = $('Normalize Input').first().json;\nconst ocr = $('Upstage OCR').first().json;\nconst rawText = String(ocr.text || '').trim();\n\nif (!rawText) {\n  return [{ json: { error: 'OCR 결과에서 텍스트를 찾지 못했습니다. 더 선명한 이미지나 텍스트 입력을 사용해주세요.' } }];\n}\n\nreturn [{\n  json: {\n    raw_text: rawText,\n    reference_text: normalized.reference_text,\n  },\n}];"
+      },
+      "id": "97f34cdc-a196-4372-88e0-5d9d2defe9e8",
+      "name": "Use OCR Text",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        300,
+        0
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Analyze Note Webhook": {
+      "main": [
+        [
+          {
+            "node": "Normalize Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Input": {
+      "main": [
+        [
+          {
+            "node": "Has Text?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has Text?": {
+      "main": [
+        [
+          {
+            "node": "Use Text Input",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Has Document?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Use Text Input": {
+      "main": [
+        [
+          {
+            "node": "Prepare Prompts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has Document?": {
+      "main": [
+        [
+          {
+            "node": "Upstage OCR",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Return Input Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upstage OCR": {
+      "main": [
+        [
+          {
+            "node": "Use OCR Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Use OCR Text": {
+      "main": [
+        [
+          {
+            "node": "Prepare Prompts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Return Input Error": {
+      "main": [
+        [
+          {
+            "node": "Prepare Prompts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Prompts": {
+      "main": [
+        [
+          {
+            "node": "Has Input Error?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has Input Error?": {
+      "main": [
+        [
+          {
+            "node": "Build Response",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Upstage Feedback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upstage Feedback": {
+      "main": [
+        [
+          {
+            "node": "Upstage Quiz",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upstage Quiz": {
+      "main": [
+        [
+          {
+            "node": "Build Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "a4c36cf4-c160-4026-819f-70c74fb1394a",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "id": "solar-teacher-hands-on",
+  "tags": []
+}
