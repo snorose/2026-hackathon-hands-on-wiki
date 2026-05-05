@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: 시작하기
+slug: /
 ---
 
 # Solar Teacher Low-Code Hands-on
