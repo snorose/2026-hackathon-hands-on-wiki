@@ -4,7 +4,7 @@ title: 시작하기
 slug: /
 ---
 
-# 2026-hackathon-hands-on Hands-on
+# 2026-hackathon-hands-on
 
 이 핸즈온에서는 **노트를 넣으면 AI가 피드백과 OX 퀴즈를 만들어 주는 작은 학습 도구**를 직접 실행합니다.
 
