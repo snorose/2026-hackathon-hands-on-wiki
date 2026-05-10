@@ -4,10 +4,10 @@ const config = {
   title: 'Solar Teacher Low-Code Hands-on',
   tagline: '비전공자를 위한 n8n AI 에이전트 실습',
   url: 'https://snorose.github.io',
-  baseUrl: '/2026-hackathon-hands-on/',
+  baseUrl: '/2026-hackathon-hands-on-wiki/',
 
   organizationName: 'snorose',
-  projectName: '2026-hackathon-hands-on',
+  projectName: '2026-hackathon-hands-on-wiki',
 
   onBrokenLinks: 'throw',
   markdown: {

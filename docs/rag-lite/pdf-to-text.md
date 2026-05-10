@@ -27,7 +27,7 @@ title: PDF 일부를 참고자료로 바꾸기
 결과 파일은 실습 폴더의 `references/`에 둘 수 있습니다.
 
 ```text
-2026-hackathon-hands-on/references/01_software_development_pages_16_27_ocr.txt
+2026-hackathon-hands-on-wiki/references/01_software_development_pages_16_27_ocr.txt
 ```
 
 ## 사용하는 방법
