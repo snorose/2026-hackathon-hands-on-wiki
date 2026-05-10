@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solar Teacher Low-Code</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <span>Low-Code Hands-on</span>
+  </header>
+
+  <main class="workspace">
+    <section class="panel input-panel">
+      <h1>노트 업로드</h1>
+      <p>텍스트를 입력하거나 이미지/PDF를 업로드하면 n8n 워크플로우가 AI 피드백과 OX 퀴즈를 생성합니다.</p>
+
+      <label>
+        n8n Webhook URL
+        <input id="webhookUrl" value="http://localhost:5678/webhook/solar-teacher/analyze">
+      </label>
+
+      <label>
+        참고자료 (선택)
+        <textarea id="reference" class="reference-input" placeholder="교과서, 수업자료, 정답 기준이 되는 내용을 붙여넣어 보세요."></textarea>
+      </label>
+
+      <div class="mode-row" role="group" aria-label="입력 방식">
+        <button id="textMode" class="active" type="button">텍스트</button>
+        <button id="fileMode" type="button">이미지/PDF</button>
+      </div>
+
+      <label id="textBox">
+        노트 내용
+        <textarea id="content" placeholder="백지 공부로 떠올린 내용을 적어보세요."></textarea>
+      </label>
+
+      <label id="fileBox" class="hidden">
+        노트 파일
+        <input id="document" type="file" accept="image/png,image/jpeg,image/jpg,application/pdf">
+      </label>
+
+      <button id="analyze" class="primary" type="button">분석하기</button>
+      <p id="status" class="status"></p>
+    </section>
+
+    <section class="panel output-panel">
+      <div class="result-head">
+        <h2>AI 피드백</h2>
+      </div>
+      <div id="feedback" class="feedback empty">아직 분석 결과가 없습니다.</div>
+
+      <h2>OX 퀴즈</h2>
+      <div id="quiz" class="quiz empty">분석 후 퀴즈가 표시됩니다.</div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
