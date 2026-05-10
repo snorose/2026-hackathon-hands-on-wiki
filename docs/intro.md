@@ -4,7 +4,7 @@ title: 시작하기
 slug: /
 ---
 
-# Solar Teacher Low-Code Hands-on
+# 2026-hackathon-hands-on Hands-on
 
 이 핸즈온에서는 **노트를 넣으면 AI가 피드백과 OX 퀴즈를 만들어 주는 작은 학습 도구**를 직접 실행합니다.
 
@@ -45,7 +45,7 @@ flowchart LR
 
 ## 실습 폴더
 
-실습 코드는 `Solar Teacher Low-Code` 폴더에 있습니다. 이 문서는 그 폴더를 실행하고 이해하는 방법을 안내합니다.
+실습 코드는 `2026-hackathon-hands-on` 폴더에 있습니다. 이 문서는 그 폴더를 실행하고 이해하는 방법을 안내합니다.
 
 문서를 보면서 따라 할 때는 터미널에서 아래 위치를 자주 사용합니다.
 

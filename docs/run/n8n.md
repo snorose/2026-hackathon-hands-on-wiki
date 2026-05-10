@@ -16,7 +16,7 @@ n8n은 두 가지 방법으로 실행할 수 있습니다.
 ## 실습 폴더로 이동하기
 
 ```bash
-cd "/Users/esc/Desktop/2026-hackathon/Solar Teacher Low-Code"
+cd "/Users/esc/Desktop/2026-hackathon/2026-hackathon-hands-on"
 ```
 
 ## 방법 A: NPX로 실행하기

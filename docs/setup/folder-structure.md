@@ -7,7 +7,7 @@ title: 폴더 구조 이해하기
 실습 폴더는 작은 AI 서비스 하나를 실행하기 위한 파일들로 구성되어 있습니다.
 
 ```text
-Solar Teacher Low-Code/
+2026-hackathon-hands-on/
   docker-compose.yml
   .env.example
   frontend/
