@@ -33,4 +33,16 @@ Webhook
   -> 응답 정리
 ```
 
-[아키텍처 추가 추천] n8n 워크플로우 캡처 또는 노드 흐름 다이어그램
+```mermaid
+flowchart LR
+    webhook["Webhook"] --> normalize["Normalize Input"]
+    normalize --> hasText{"Has Text?"}
+    normalize --> hasDoc{"Has Document?"}
+    hasDoc --> ocr["Upstage OCR"]
+    hasText --> prompts["Prepare Prompts"]
+    ocr --> prompts
+    prompts --> feedback["Upstage Feedback"]
+    prompts --> quiz["Upstage Quiz"]
+    feedback --> response["Build Response"]
+    quiz --> response
+```

@@ -23,7 +23,7 @@ title: 터미널 아주 가볍게 이해하기
 터미널에서 특정 폴더로 이동할 때는 `cd` 명령어를 씁니다.
 
 ```bash
-cd "/Users/esc/Desktop/2026-hackathon/Solar Teacher Low-Code"
+cd "2026-hackathon-hands-on"
 ```
 
 `cd`는 “change directory”, 즉 “폴더를 바꿔 주세요”라는 뜻입니다.
@@ -37,7 +37,3 @@ docker compose up -d
 ```
 
 명령어를 입력한 뒤에는 `Enter`를 누릅니다.
-
-:::tip
-오타가 나면 당황하지 않아도 됩니다. 다시 복사해서 실행하면 됩니다.
-:::

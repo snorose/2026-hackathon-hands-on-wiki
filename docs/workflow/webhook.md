@@ -46,4 +46,4 @@ http://localhost:5678/webhook/solar-teacher/analyze
 
 하지만 n8n 환경에 따라 파일 binary 이름이 달라질 수 있어, 이번 실습에서는 프론트가 파일을 base64로 읽어 JSON에 담아 보냅니다.
 
-이 방식은 비전공자 실습에서 더 안정적으로 동작합니다.
+이 방식은 실습에서 더 안정적으로 동작합니다.

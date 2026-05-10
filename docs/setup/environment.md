@@ -8,15 +8,11 @@ title: 환경변수 준비하기
 
 이번 실습에서는 API Key를 코드에 직접 적지 않고 `.env` 파일에 넣습니다.
 
+Docker Compose 방식은 `.env` 파일을 자동으로 읽습니다.
+
+NPX 방식은 `.env` 파일을 자동으로 읽지 않으므로, n8n을 실행하기 전에 터미널에서 `.env` 값을 환경변수로 불러와야 합니다.
+
 ## `.env` 만들기
-
-실습 폴더로 이동합니다.
-
-```bash
-cd "/Users/esc/Desktop/2026-hackathon/Solar Teacher Low-Code"
-```
-
-예시 파일을 복사합니다.
 
 ```bash
 cp .env.example .env
@@ -24,16 +20,12 @@ cp .env.example .env
 
 ## `.env` 수정하기
 
-`.env` 파일을 열어 아래처럼 수정합니다.
-
 ```env
 UPSTAGE_API_KEY=up_여기에_내_API_KEY
 UPSTAGE_CHAT_MODEL=solar-pro
 N8N_SECURE_COOKIE=false
 N8N_BLOCK_ENV_ACCESS_IN_NODE=false
 ```
-
-## 각 값의 의미
 
 | 이름 | 의미 |
 | --- | --- |

@@ -18,12 +18,16 @@ title: PDF 일부를 참고자료로 바꾸기
 
 ## 이번 예시
 
-`01_소프트웨어_개발.pdf`의 16-27페이지만 OCR로 텍스트화했습니다.
+이번 예시는 TOPCIT 시험 학습자료인 1장 “소프트웨어 개발” PDF를 기준으로 합니다.
+
+- [TOPCIT 1장: 소프트웨어 개발 PDF 내려받기](/files/topcit-chapter-01-software-development.pdf)
+
+실습에서는 이 PDF 전체를 바로 참고자료로 넣지 않고, `01_소프트웨어_개발.pdf`의 16-27페이지만 OCR로 텍스트화했습니다.
 
 결과 파일은 실습 폴더의 `references/`에 둘 수 있습니다.
 
 ```text
-Solar Teacher Low-Code/references/01_software_development_pages_16_27_ocr.txt
+2026-hackathon-hands-on/references/01_software_development_pages_16_27_ocr.txt
 ```
 
 ## 사용하는 방법
@@ -39,4 +43,21 @@ Solar Teacher Low-Code/references/01_software_development_pages_16_27_ocr.txt
 
 그림까지 이해하려면 이미지 설명 모델이나 문서 파싱 도구가 추가로 필요합니다.
 
-[아키텍처 추가 추천] 참고자료 PDF를 실제 서비스에서 처리하는 확장 흐름: PDF -> OCR/문서 파싱 -> 저장 -> 검색 -> 프롬프트
+## 실제 서비스로 확장한다면
+
+실제 서비스에서는 참고자료 PDF를 매번 사람이 복사해 넣지 않고, 문서를 미리 처리해 검색 가능한 저장소에 넣습니다.
+
+```mermaid
+flowchart LR
+    pdf["참고자료 PDF"] --> parse["OCR 또는 문서 파싱"]
+    parse --> text["텍스트 추출"]
+    text --> chunk["문단 단위로 나누기"]
+    chunk --> embed["임베딩"]
+    embed --> db[("벡터DB / 검색 저장소")]
+    question["사용자 질문"] --> search["관련 내용 검색"]
+    db --> search
+    search --> prompt["검색 결과를 프롬프트에 포함"]
+    prompt --> llm["LLM 답변 생성"]
+```
+
+이번 실습에서는 이 과정을 단순화해, `references/`의 텍스트를 사람이 직접 참고자료 칸에 붙여넣습니다.

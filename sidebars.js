@@ -6,9 +6,10 @@ const sidebars = {
       label: '1. 처음 환경 준비하기',
       items: [
         'first-time-setup/overview',
-        'first-time-setup/terminal-basics',
-        'first-time-setup/install-docker-desktop',
+        'first-time-setup/n8n-introduction',
         'first-time-setup/why-docker-n8n',
+        'first-time-setup/install-nodejs',
+        'first-time-setup/install-docker-desktop',
         'first-time-setup/text-editor',
         'first-time-setup/upstage-api-key',
         'first-time-setup/prepare-folder',
@@ -28,6 +29,8 @@ const sidebars = {
       label: '3. 실행하기',
       items: [
         'run/n8n',
+        'run/n8n-ui-tour',
+        'run/trigger-action-nodes',
         'run/import-workflow',
         'run/frontend',
         'run/first-test',

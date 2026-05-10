@@ -21,7 +21,15 @@ slug: /
 5. AI가 피드백과 OX 퀴즈를 만듭니다.
 6. 결과가 다시 웹 화면에 표시됩니다.
 
-[아키텍처 추가 추천] 전체 흐름 그림: `프론트 화면 -> n8n Webhook -> OCR -> RAG-lite -> Upstage Chat -> 결과 화면`
+```mermaid
+flowchart LR
+    front["프론트 화면"] --> webhook["n8n Webhook"]
+    webhook --> ocr["OCR"]
+    webhook --> rag["RAG-lite"]
+    ocr --> llm["Upstage Chat"]
+    rag --> llm
+    llm --> result["결과 화면"]
+```
 
 ## 이번 실습에서 다루는 개념
 
@@ -42,7 +50,7 @@ slug: /
 문서를 보면서 따라 할 때는 터미널에서 아래 위치를 자주 사용합니다.
 
 ```bash
-cd "/Users/esc/Desktop/2026-hackathon/Solar Teacher Low-Code"
+cd "2026-hackathon-hands-on"
 ```
 
 ## 먼저 알아둘 점

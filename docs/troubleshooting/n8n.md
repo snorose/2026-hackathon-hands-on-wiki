@@ -10,32 +10,23 @@ n8n 주소는 아래와 같습니다.
 http://localhost:5678
 ```
 
-## 1. Docker Desktop 확인
+## 어떤 방식으로 실행했는지 확인
 
-Docker Desktop이 실행 중인지 확인합니다.
+| 실행 방식 | 확인할 것 |
+| --- | --- |
+| NPX | `npx n8n`을 실행한 터미널이 아직 켜져 있는지 확인합니다. |
+| Docker Compose | Docker Desktop이 실행 중인지 확인합니다. |
 
-꺼져 있다면 Docker Desktop을 먼저 실행합니다.
+둘 중 하나만 실행해야 합니다. 두 방식이 동시에 `5678` 포트를 사용하면 충돌할 수 있습니다.
 
-## 2. n8n 다시 실행
-
-실습 폴더로 이동합니다.
-
-```bash
-cd "/Users/esc/Desktop/2026-hackathon/Solar Teacher Low-Code"
-```
-
-n8n을 실행합니다.
+## 포트가 겹칠 때
 
 ```bash
-docker compose up -d
+lsof -i :5678
 ```
 
-## 3. 포트가 겹칠 때
+다른 포트로 실행하려면 아래처럼 실행합니다.
 
-이미 다른 프로그램이 5678번 포트를 쓰고 있으면 n8n이 열리지 않을 수 있습니다.
-
-이 경우 강사에게 문의하세요.
-
-:::tip
-대부분의 경우 Docker Desktop을 켜고 `docker compose up -d`를 다시 실행하면 해결됩니다.
-:::
+```bash
+npx n8n --port=8080
+```

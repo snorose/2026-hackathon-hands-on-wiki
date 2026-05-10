@@ -34,4 +34,24 @@ Solar Teacher Low-Code/
 
 이번 실습에서는 백엔드를 따로 실행하지 않습니다. n8n이 백엔드처럼 요청을 받고, OCR과 AI 호출을 처리합니다.
 
-[아키텍처 추가 추천] 일반 웹 서비스의 프론트/백엔드 구조와 이번 실습의 프론트/n8n 구조 비교 그림
+```mermaid
+flowchart LR
+    subgraph classic["일반 웹 서비스"]
+        direction LR
+        user1["사용자"] --> frontend1["프론트엔드<br/>(화면)"]
+        frontend1 --> backend1["백엔드 서버<br/>(API/비즈니스 로직)"]
+        backend1 --> database1[("데이터베이스")]
+        backend1 --> api1["외부 API"]
+    end
+
+    subgraph practice["이번 실습"]
+        direction LR
+        user2["사용자"] --> frontend2["프론트엔드<br/>(index.html / app.js)"]
+        frontend2 --> webhook2["n8n Webhook"]
+        webhook2 --> workflow2["n8n 워크플로우<br/>(OCR / RAG-lite / AI 호출)"]
+        workflow2 --> reference2["references/<br/>참고자료 텍스트"]
+        workflow2 --> api2["Upstage API"]
+        workflow2 --> result2["결과 JSON"]
+        result2 --> frontend2
+    end
+```

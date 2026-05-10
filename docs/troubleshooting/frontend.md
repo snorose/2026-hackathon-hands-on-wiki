@@ -15,7 +15,7 @@ http://localhost:3010
 프론트 폴더로 이동합니다.
 
 ```bash
-cd "/Users/esc/Desktop/2026-hackathon/Solar Teacher Low-Code/frontend"
+cd "2026-hackathon-hands-on/frontend"
 ```
 
 서버를 실행합니다.

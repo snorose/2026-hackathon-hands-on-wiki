@@ -54,3 +54,6 @@ title: 피드백과 퀴즈 생성하기
 n8n의 HTTP Request 노드가 Upstage Chat API를 호출합니다.
 
 이때 `.env`에 넣어 둔 `UPSTAGE_API_KEY`가 사용됩니다.
+n8n의 HTTP Request 노드가 Upstage Chat API를 호출합니다.
+
+이번 실습에서는 피드백 생성과 OX 퀴즈 생성을 나누어 실행합니다. 이렇게 하면 각 결과의 형식을 더 안정적으로 관리할 수 있습니다.

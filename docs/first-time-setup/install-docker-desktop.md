@@ -4,11 +4,11 @@ title: Docker Desktop 설치하기
 
 # Docker Desktop 설치하기
 
-Docker Desktop은 n8n을 쉽게 실행하기 위해 필요합니다.
+Docker Desktop은 Docker Compose 방식으로 n8n을 실행할 때 필요합니다.
 
-Docker를 아주 쉽게 말하면, **프로그램을 실행하는 작은 상자**입니다. 우리 컴퓨터에 n8n을 직접 복잡하게 설치하지 않고, n8n이 들어 있는 상자를 실행합니다.
+Docker를 아주 쉽게 말하면, **프로그램을 실행하는 작은 상자**입니다. 우리 컴퓨터에 n8n 실행 환경을 직접 복잡하게 설치하지 않고, n8n이 들어 있는 상자를 실행합니다.
 
-## 설치 순서
+## 설치하기
 
 1. Docker Desktop 공식 사이트에 접속합니다.
 2. 내 운영체제에 맞는 Docker Desktop을 다운로드합니다.
@@ -18,24 +18,9 @@ Docker를 아주 쉽게 말하면, **프로그램을 실행하는 작은 상자*
 
 ## 설치 확인
 
-터미널에서 아래 명령어를 실행합니다.
-
 ```bash
 docker --version
+docker compose version
 ```
 
-버전이 출력되면 Docker 명령어를 사용할 수 있는 상태입니다.
-
-```text
-Docker version ...
-```
-
-## Docker Desktop이 켜져 있어야 합니다
-
-n8n을 실행하려면 Docker Desktop이 켜져 있어야 합니다.
-
-Docker Desktop이 꺼져 있으면 `docker compose up -d` 명령어가 실패할 수 있습니다.
-
-:::warning
-학교나 기관 컴퓨터에서는 Docker Desktop 설치 권한이 없을 수 있습니다. 이 경우 강사가 미리 설치된 환경을 준비해야 합니다.
-:::
+NPX 방식으로만 실습한다면 Docker Desktop은 필요하지 않습니다. 초보자는 먼저 Node.js 설치 후 NPX 방식으로 시작하고, Docker에 익숙하거나 환경을 분리해서 관리하고 싶을 때 Docker Desktop을 준비하면 됩니다.
