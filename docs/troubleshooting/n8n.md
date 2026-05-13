@@ -21,12 +21,22 @@ http://localhost:5678
 
 ## 포트가 겹칠 때
 
+macOS 또는 Linux:
+
 ```bash
 lsof -i :5678
 ```
 
+Windows PowerShell:
+
+```powershell
+Get-NetTCPConnection -LocalPort 5678
+```
+
 다른 포트로 실행하려면 아래처럼 실행합니다.
 
-```bash
+macOS, Linux, Windows PowerShell 모두:
+
+```text
 npx n8n --port=8080
 ```

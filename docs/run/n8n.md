@@ -15,15 +15,25 @@ n8n은 두 가지 방법으로 실행할 수 있습니다.
 
 ## 실습 폴더로 이동하기
 
+macOS 또는 Linux:
+
 ```bash
-cd "/Users/esc/Desktop/2026-hackathon/2026-hackathon-hands-on"
+cd "$HOME/Desktop/2026-hackathon/2026-hackathon-hands-on"
+```
+
+Windows PowerShell:
+
+```powershell
+cd "$HOME\Desktop\2026-hackathon\2026-hackathon-hands-on"
 ```
 
 ## 방법 A: NPX로 실행하기
 
 초보자라면 이 방법을 먼저 선택하세요.
 
-```bash
+macOS, Linux, Windows PowerShell 모두:
+
+```text
 node --version
 npm --version
 ```
@@ -53,7 +63,9 @@ npx n8n
 
 Docker Desktop과 컨테이너 사용에 익숙하다면 이 방법을 선택하세요.
 
-```bash
+macOS, Linux, Windows PowerShell 모두:
+
+```text
 docker --version
 docker compose version
 docker compose up -d
@@ -88,7 +100,9 @@ NPX 방식에서는 실행 중인 터미널에서 `Ctrl + C`로 n8n을 끄고, `
 
 Docker Compose 방식에서는 아래 명령어를 실행합니다.
 
-```bash
+macOS, Linux, Windows PowerShell 모두:
+
+```text
 docker compose up -d --force-recreate
 ```
 

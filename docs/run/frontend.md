@@ -6,9 +6,18 @@ title: 프론트 화면 실행하기
 
 프론트 화면은 `frontend/` 폴더에 들어 있습니다.
 
+macOS 또는 Linux:
+
 ```bash
-cd "/2026-hackathon-hands-on/frontend"
+cd "$HOME/Desktop/2026-hackathon/2026-hackathon-hands-on/frontend"
 python3 -m http.server 3010
+```
+
+Windows PowerShell:
+
+```powershell
+cd "$HOME\Desktop\2026-hackathon\2026-hackathon-hands-on\frontend"
+py -m http.server 3010
 ```
 
 브라우저에서 아래 주소를 엽니다.

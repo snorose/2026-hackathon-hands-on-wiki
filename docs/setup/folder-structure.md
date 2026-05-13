@@ -25,7 +25,7 @@ title: 폴더 구조 이해하기
 | `.env` | 실제 API Key를 넣는 파일입니다. 직접 만들어야 합니다. |
 | `frontend/` | 사용자가 보는 웹 화면입니다. |
 | `workflows/` | n8n에 가져올 워크플로우 JSON 파일이 들어 있습니다. |
-| `references/` | RAG-lite에 넣어 볼 참고자료 텍스트가 들어갑니다. |
+| `references/` | Pseudo-RAG에 넣어 볼 참고자료 텍스트가 들어갑니다. |
 | `n8n_data/` | n8n이 내부적으로 쓰는 데이터 폴더입니다. |
 
 ## 별도 백엔드는 없습니다
@@ -48,7 +48,7 @@ flowchart LR
         direction LR
         user2["사용자"] --> frontend2["프론트엔드<br/>(index.html / app.js)"]
         frontend2 --> webhook2["n8n Webhook"]
-        webhook2 --> workflow2["n8n 워크플로우<br/>(OCR / RAG-lite / AI 호출)"]
+        webhook2 --> workflow2["n8n 워크플로우<br/>(OCR / Pseudo-RAG / AI 호출)"]
         workflow2 --> reference2["references/<br/>참고자료 텍스트"]
         workflow2 --> api2["Upstage API"]
         workflow2 --> result2["결과 JSON"]

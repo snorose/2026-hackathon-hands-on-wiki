@@ -25,7 +25,7 @@ slug: /
 flowchart LR
     front["프론트 화면"] --> webhook["n8n Webhook"]
     webhook --> ocr["OCR"]
-    webhook --> rag["RAG-lite"]
+    webhook --> rag["Pseudo-RAG"]
     ocr --> llm["Upstage Chat"]
     rag --> llm
     llm --> result["결과 화면"]
@@ -39,7 +39,7 @@ flowchart LR
 | n8n | 일을 순서대로 연결하는 자동화 도구입니다. |
 | Webhook | 외부 요청을 받는 입구입니다. |
 | OCR | 이미지나 PDF 안의 글자를 읽어 텍스트로 바꾸는 기술입니다. |
-| RAG-lite | AI가 답하기 전에 참고자료를 같이 보게 하는 간단한 방식입니다. |
+| Pseudo-RAG | 실제 RAG처럼 참고자료를 AI에게 함께 전달해 보는 간이 방식입니다. 표준 용어라기보다 이번 실습에서 쓰는 설명용 표현입니다. |
 | LLM | 글을 이해하고 답변을 만드는 AI 모델입니다. |
 | Structured output | AI 답변을 XML, JSON처럼 정해진 모양으로 받는 방식입니다. |
 
@@ -49,8 +49,16 @@ flowchart LR
 
 문서를 보면서 따라 할 때는 터미널에서 아래 위치를 자주 사용합니다.
 
+macOS 또는 Linux:
+
 ```bash
-cd "2026-hackathon-hands-on"
+cd "$HOME/Desktop/2026-hackathon/2026-hackathon-hands-on"
+```
+
+Windows에서는 PowerShell 사용을 권장합니다.
+
+```powershell
+cd "$HOME\Desktop\2026-hackathon\2026-hackathon-hands-on"
 ```
 
 ## 먼저 알아둘 점

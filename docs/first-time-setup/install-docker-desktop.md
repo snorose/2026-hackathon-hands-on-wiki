@@ -18,7 +18,9 @@ Docker를 아주 쉽게 말하면, **프로그램을 실행하는 작은 상자*
 
 ## 설치 확인
 
-```bash
+macOS, Linux, Windows PowerShell 모두:
+
+```text
 docker --version
 docker compose version
 ```

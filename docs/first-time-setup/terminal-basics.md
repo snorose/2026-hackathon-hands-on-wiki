@@ -15,15 +15,25 @@ title: 터미널 아주 가볍게 이해하기
 ## Windows에서 터미널 열기
 
 1. 시작 메뉴를 엽니다.
-2. `PowerShell` 또는 `Terminal`을 검색합니다.
+2. `PowerShell`을 검색합니다.
 3. 실행합니다.
+
+Windows에서는 이 문서의 Windows 예시를 PowerShell 기준으로 제공합니다. `cmd`보다 PowerShell을 사용하는 것을 권장합니다.
 
 ## 폴더 이동하기
 
 터미널에서 특정 폴더로 이동할 때는 `cd` 명령어를 씁니다.
 
+macOS 또는 Linux:
+
 ```bash
-cd "2026-hackathon-hands-on"
+cd "$HOME/Desktop/2026-hackathon/2026-hackathon-hands-on"
+```
+
+Windows PowerShell:
+
+```powershell
+cd "$HOME\Desktop\2026-hackathon\2026-hackathon-hands-on"
 ```
 
 `cd`는 “change directory”, 즉 “폴더를 바꿔 주세요”라는 뜻입니다.
@@ -32,7 +42,9 @@ cd "2026-hackathon-hands-on"
 
 문서의 코드 블록은 그대로 복사해서 터미널에 붙여넣을 수 있습니다.
 
-```bash
+macOS, Linux, Windows PowerShell 모두:
+
+```text
 docker compose up -d
 ```
 

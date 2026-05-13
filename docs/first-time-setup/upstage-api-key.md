@@ -21,8 +21,16 @@ API Key는 외부 서비스를 사용할 때 필요한 열쇠입니다.
 
 실습 폴더에서 `.env.example`을 복사해서 `.env`를 만들고, 그 안에 넣습니다.
 
+macOS 또는 Linux:
+
 ```bash
 cp .env.example .env
+```
+
+Windows PowerShell:
+
+```powershell
+Copy-Item .env.example .env
 ```
 
 `.env` 파일을 열어 아래처럼 수정합니다.
@@ -47,7 +55,9 @@ NPX 방식이라면 실행 중인 터미널에서 `Ctrl + C`로 n8n을 끄고, `
 
 Docker Compose 방식이라면 n8n 컨테이너를 재생성합니다.
 
-```bash
+macOS, Linux, Windows PowerShell 모두:
+
+```text
 docker compose up -d --force-recreate
 ```
 

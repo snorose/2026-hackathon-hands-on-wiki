@@ -21,7 +21,7 @@ title: 오늘 만든 AI 에이전트 정리
 - Trigger
 - Tool use
 - OCR
-- RAG-lite
+- Pseudo-RAG
 - Prompt
 - Structured output
 - Memory

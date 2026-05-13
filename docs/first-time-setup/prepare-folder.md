@@ -6,8 +6,16 @@ title: 실습 폴더 준비하기
 
 문서에서는 실습 폴더 이름을 `2026-hackathon-hands-on`라고 가정합니다.
 
+macOS 또는 Linux:
+
 ```bash
-cd "2026-hackathon-hands-on"
+cd "$HOME/Desktop/2026-hackathon/2026-hackathon-hands-on"
+```
+
+Windows PowerShell:
+
+```powershell
+cd "$HOME\Desktop\2026-hackathon\2026-hackathon-hands-on"
 ```
 
 폴더 안에는 아래 파일과 폴더가 있어야 합니다.

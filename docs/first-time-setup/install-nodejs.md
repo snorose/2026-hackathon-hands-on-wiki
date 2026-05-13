@@ -8,7 +8,9 @@ NPX 방식으로 n8n을 실행하려면 Node.js와 npm이 필요합니다.
 
 ## 설치되어 있는지 확인하기
 
-```bash
+macOS, Linux, Windows PowerShell 모두:
+
+```text
 node --version
 npm --version
 ```

@@ -14,14 +14,23 @@ http://localhost:3010
 
 프론트 폴더로 이동합니다.
 
+macOS 또는 Linux:
+
 ```bash
-cd "2026-hackathon-hands-on/frontend"
+cd "$HOME/Desktop/2026-hackathon/2026-hackathon-hands-on/frontend"
 ```
 
 서버를 실행합니다.
 
 ```bash
 python3 -m http.server 3010
+```
+
+Windows PowerShell:
+
+```powershell
+cd "$HOME\Desktop\2026-hackathon\2026-hackathon-hands-on\frontend"
+py -m http.server 3010
 ```
 
 터미널에 서버가 실행 중이라는 메시지가 나오면 브라우저에서 주소를 엽니다.

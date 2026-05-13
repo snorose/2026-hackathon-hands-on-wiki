@@ -18,14 +18,16 @@ title: 실행 전 체크리스트
 
 ## 확인 명령어
 
-```bash
+macOS, Linux, Windows PowerShell 모두:
+
+```text
 node --version
 npm --version
 ```
 
 Docker Compose 방식이면 아래도 확인합니다.
 
-```bash
+```text
 docker --version
 docker compose version
 ```
