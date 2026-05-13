@@ -46,12 +46,12 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: '5. RAG-lite',
+      label: '5. Pseudo-RAG',
       items: [
-        'rag-lite/what-is-rag',
-        'rag-lite/use-reference-text',
-        'rag-lite/pdf-to-text',
-        'rag-lite/real-rag-vs-rag-lite',
+        'pseudo-rag/what-is-rag',
+        'pseudo-rag/use-reference-text',
+        'pseudo-rag/pdf-to-text',
+        'pseudo-rag/real-rag-vs-pseudo-rag',
       ],
     },
     {
